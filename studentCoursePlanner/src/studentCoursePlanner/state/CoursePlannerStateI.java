@@ -9,7 +9,5 @@ public interface CoursePlannerStateI {
 	public void Elective(String Course);
 	public void Degree(String Course);
 	
-	
-	
 }
 

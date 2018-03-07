@@ -1,12 +1,12 @@
 package studentCoursePlanner.util;
 
-import java.io.File;
-import java.util.Scanner;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 public class FileProcessor {
 
-	Scanner scan;
-	File file;
+	BufferedReader bufferedReader = null;
+	FileReader fileReader = null;
 	
 	/**
 	 * This function is used to read contents of file line by line
@@ -15,14 +15,10 @@ public class FileProcessor {
 	public String readLine(String inputFileName) {
 		String entry = null;
 		try {
-			file = new File(inputFileName);
-			scan = new Scanner(file);
-		
-			if(scan.hasNextLine()) {
-			entry = scan.next();
-			if(entry.isEmpty())
-				return null;
-			}
+			fileReader = new FileReader(inputFileName);
+			bufferedReader = new BufferedReader(fileReader);
+			entry = bufferedReader.readLine();
+			
 		} catch (Exception e) {
 			System.out.println(e);
 			System.exit(1);

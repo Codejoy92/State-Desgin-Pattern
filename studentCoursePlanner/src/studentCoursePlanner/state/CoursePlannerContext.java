@@ -8,14 +8,14 @@ public class CoursePlannerContext {
 			currentCore3State, currentCore4State, currentElectiveState, currentDegreeState;
 	CoursePlannerStateI ongoingDegree, completedDegree, neverGraduateDegree;
 	Results results;
-	int countCourse = 0;
-	int core1Status = 0;
-	int core2Status = 0;
-	int core3Status = 0;
-	int core4Status = 0;
-	int electiveCount = 0;
+	int countCourse;
+	int core1Status;
+	int core2Status;
+	int core3Status;
+	int core4Status;
+	int electiveCount;
 	
-	public  CoursePlannerContext() {
+	private  void InitiliazeCoursePlanner() {
 		noCourse = new NoCourseState(this);
 		oneCourse = new OneCourseState(this);
 		twoCourse = new TwoCourseState(this);
@@ -30,10 +30,20 @@ public class CoursePlannerContext {
 		currentCore4State = noCourse;
 		currentElectiveState = noCourse;
 		currentDegreeState = ongoingDegree;
+		
+		countCourse = 0;
+		core1Status = 0;
+		core2Status = 0;
+		core3Status = 0;
+		core4Status = 0;
+		electiveCount = 0;
 		results = new Results();
+		
 	}
 	
 	public void trackProgress(String CourseInput) {
+		
+		InitiliazeCoursePlanner();
 		countCourse++;
 		
 		switch(CourseInput){
@@ -41,28 +51,28 @@ public class CoursePlannerContext {
 			case "B":
 			case "C":
 			case "D":
-				currentCore1State.Core1("core1");
+				currentCore1State.Core1(CourseInput);
 				break;
 			case "E":
 			case "F":
 			case "G":
 			case "H":
-				currentCore2State.Core2("core2");
+				currentCore2State.Core2(CourseInput);
 				break;
 			case "I":
 			case "J":
 			case "K":
 			case "L":
-				currentCore3State.Core3("core3");
+				currentCore3State.Core3(CourseInput);
 				break;
 			case "M":
 			case "N":
 			case "O":
 			case "P":
-				currentCore4State.Core4("core4");
+				currentCore4State.Core4(CourseInput);
 				break;
 			default:
-				currentElectiveState.Elective("elective");
+				currentElectiveState.Elective(CourseInput);
 				break;
 		}
 //		results.addCourseToResult(CourseInput);
