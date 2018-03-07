@@ -40,21 +40,21 @@ public class StateMachineUtility {
 			String[] course = splitData[1].split(" ");
 			int noOfCourses = course.length;
 
-			for (int i = 1; i <= noOfCourses; i++) {
+			for (int i = 1; i < noOfCourses; i++) {
 				// filling up courses for 1st sem
-				if (course[i].equalsIgnoreCase(core1.get(0))) {
+				if (!core1.isEmpty() && course[i].equalsIgnoreCase(core1.get(0))) {
 					semesterList.add(course[i]);
 					core1.remove(0);
 					waitListCheck(core1);
-				} else if (course[i].equalsIgnoreCase(core2.get(0))) {
+				} else if (!core2.isEmpty() && course[i].equalsIgnoreCase(core2.get(0))) {
 					semesterList.add(course[i]);
 					core2.remove(0);
 					waitListCheck(core2);
-				} else if (course[i].equalsIgnoreCase(core3.get(0))) {
+				} else if (!core3.isEmpty() && course[i].equalsIgnoreCase(core3.get(0))) {
 					semesterList.add(course[i]);
 					core3.remove(0);
 					waitListCheck(core3);
-				} else if (course[i].equalsIgnoreCase(core4.get(0))) {
+				} else if (!core4.isEmpty() && course[i].equalsIgnoreCase(core4.get(0))) {
 					semesterList.add(course[i]);
 					core4.remove(0);
 					waitListCheck(core4);
@@ -66,27 +66,27 @@ public class StateMachineUtility {
 			}
 //courses from waitList will be released in Alphabetical order
 			Collections.sort(waitList);
-			
-			for (String var : waitList) {
-				semesterList.add(var);
-				if (core1.contains(var)) {
-					core1.remove(var);
-				}
-				if (core2.contains(var)) {
-					core2.remove(var);
-				}
-				if (core3.contains(var)) {
-					core3.remove(var);
-				}
-				if (core4.contains(var)) {
-					core4.remove(var);
-				}
-				if (core1.size() <= 2 && core2.size() <= 2 && core3.size() <= 2 && core4.size() <= 2
-						&& semesterList.size() >= 10) {
-					break;
+			if (!waitList.isEmpty()) {
+				for (String var : waitList) {
+					semesterList.add(var);
+					if (core1.contains(var)) {
+						core1.remove(var);
+					}
+					if (core2.contains(var)) {
+						core2.remove(var);
+					}
+					if (core3.contains(var)) {
+						core3.remove(var);
+					}
+					if (core4.contains(var)) {
+						core4.remove(var);
+					}
+					if (core1.size() <= 2 && core2.size() <= 2 && core3.size() <= 2 && core4.size() <= 2
+							&& semesterList.size() >= 10) {
+						break;
+					}
 				}
 			}
-
 			for (String finalList : semesterList) {
 				plannerContext.trackProgress(finalList);
 			}
@@ -96,7 +96,7 @@ public class StateMachineUtility {
 	}
 
 	private void waitListCheck(List<String> core) {
-		if (waitList.contains(core.get(0))) {
+		if (!core.isEmpty() && waitList.contains(core.get(0))) {
 			semesterList.add(core.get(0));
 			waitList.remove(core.get(0));
 			core.remove(0);
