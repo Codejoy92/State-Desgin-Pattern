@@ -1,5 +1,7 @@
 package studentCoursePlanner.util;
 
-public class FileDisplayInterface {
+import java.util.ArrayList;
 
+public interface FileDisplayInterface {
+	public void writeResult(String outputFile);
 }

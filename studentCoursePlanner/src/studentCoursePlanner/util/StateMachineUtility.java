@@ -14,15 +14,20 @@ public class StateMachineUtility {
 	ArrayList<String> waitList = new ArrayList<String>();
 	Hashtable<Integer, ArrayList<String>> semesterCourses = new Hashtable<Integer, ArrayList<String>>();
 	int semesterCount = 0;
+	StateMachineUtility utility = new StateMachineUtility();
+	boolean stopSupply;
+	String outputFileName;
 	String electives = "QRSTUVZXYW";
 	List<String> core1 = new ArrayList<String>();
 	List<String> core2 = new ArrayList<String>();
 	List<String> core3 = new ArrayList<String>();
 	List<String> core4 = new ArrayList<String>();
+	Results result = new Results();
 
 	ArrayList<String> semesterList = new ArrayList<String>();
 
-	public void parseCourses(String data) {
+	public void parseCourses(String data, String outputFileNameIn) {
+		setOutputFileName(outputFileNameIn);
 		String[] list1 = new String[] { "A", "B", "C", "D" };
 		core1.addAll(Arrays.asList(list1));
 		String[] list2 = new String[] { "E", "F", "G", "H" };
@@ -64,7 +69,7 @@ public class StateMachineUtility {
 					waitList.add(course[i]);
 				}
 			}
-//courses from waitList will be released in Alphabetical order
+//Rule: courses from waitList will be released in Alphabetical order
 			Collections.sort(waitList);
 			if (!waitList.isEmpty()) {
 				for (String var : waitList) {
@@ -87,12 +92,14 @@ public class StateMachineUtility {
 					}
 				}
 			}
+			plannerContext.InitiliazeCoursePlanner();
 			for (String finalList : semesterList) {
-				plannerContext.trackProgress(finalList);
+				if(!utility.isStopSupply())
+				plannerContext.trackProgress(finalList, utility);
 			}
-
 		}
-
+		
+		result.writeResult(getOutputFileName());
 	}
 
 	private void waitListCheck(List<String> core) {
@@ -103,4 +110,29 @@ public class StateMachineUtility {
 			waitListCheck(core);
 		}
 	}
+
+	public int calculateSem(int course) {
+		int sem = 0;
+		if(course != 0) {
+			sem = course/3;
+		}
+		return sem;
+	}
+	
+	public boolean isStopSupply() {
+		return stopSupply;
+	}
+
+	public void setStopSupply(boolean stopSupply) {
+		this.stopSupply = stopSupply;
+	}
+
+	public String getOutputFileName() {
+		return outputFileName;
+	}
+
+	public void setOutputFileName(String outputFileName) {
+		this.outputFileName = outputFileName;
+	}
+	
 }

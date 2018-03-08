@@ -10,7 +10,6 @@ public class Driver {
 
 	private static FileProcessor fileProcessor;
 	private static StateMachineUtility plannerUtility;
-	private static Results result;
 	
 	public static void main(String[] args) throws FileNotFoundException{
 		if (args.length != 2 || args[0].equals("${arg0}") || args[1].equals("${arg1}") || null == args) {
@@ -19,17 +18,15 @@ public class Driver {
 		}
 		String data ="";
 		String inputFileName = args[0];
+		String outputFileName = args[1];
 		fileProcessor = new FileProcessor();
 		plannerUtility = new StateMachineUtility();
-		result = new Results();
 		
 		while (null!=data) {
 		data = fileProcessor.readLine(inputFileName);
-		plannerUtility.parseCourses(data);
-//		result.writeResult();
+		plannerUtility.parseCourses(data, outputFileName);
 		}
 		
-		result.writeResult();
 	}
 
 }

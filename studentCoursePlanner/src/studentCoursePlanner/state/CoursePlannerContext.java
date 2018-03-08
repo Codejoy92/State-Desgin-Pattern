@@ -1,6 +1,9 @@
 package studentCoursePlanner.state;
 
+import java.util.ArrayList;
+
 import studentCoursePlanner.util.Results;
+import studentCoursePlanner.util.StateMachineUtility;
 
 public class CoursePlannerContext {
 	
@@ -9,13 +12,17 @@ public class CoursePlannerContext {
 	CoursePlannerStateI ongoingDegree, completedDegree, neverGraduateDegree;
 	Results results;
 	int countCourse;
-	int core1Status;
-	int core2Status;
-	int core3Status;
-	int core4Status;
-	int electiveCount;
+	ArrayList<String> servedList = new ArrayList<String>();
 	
-	private  void InitiliazeCoursePlanner() {
+	public ArrayList<String> getServedList() {
+		return servedList;
+	}
+
+	public void setServedList(ArrayList<String> servedList) {
+		this.servedList = servedList;
+	}
+
+	public  void InitiliazeCoursePlanner() {
 		noCourse = new NoCourseState(this);
 		oneCourse = new OneCourseState(this);
 		twoCourse = new TwoCourseState(this);
@@ -32,19 +39,14 @@ public class CoursePlannerContext {
 		currentDegreeState = ongoingDegree;
 		
 		countCourse = 0;
-		core1Status = 0;
-		core2Status = 0;
-		core3Status = 0;
-		core4Status = 0;
-		electiveCount = 0;
 		results = new Results();
 		
 	}
 	
-	public void trackProgress(String CourseInput) {
+	public void trackProgress(String CourseInput, StateMachineUtility utilityIn) {
 		
-		InitiliazeCoursePlanner();
 		countCourse++;
+		
 		
 		switch(CourseInput){
 			case "A":
@@ -75,15 +77,21 @@ public class CoursePlannerContext {
 				currentElectiveState.Elective(CourseInput);
 				break;
 		}
-//		results.addCourseToResult(CourseInput);
+
+		servedList.add(CourseInput);
 		
-		if (core1Status >= 2 && core2Status >= 2 && core3Status >= 2 && core4Status >= 2 && countCourse >= 10) {
-			currentDegreeState.Degree("graduated");
-//			results.addCourseToResult(CourseInput);
+		if ((currentCore1State == twoCourse || currentCore1State == extraCourse)
+				&& (currentCore2State == twoCourse || currentCore2State == extraCourse)
+				&& (currentCore3State == twoCourse || currentCore3State == extraCourse)
+				&& (currentCore4State == twoCourse || currentCore4State == extraCourse)
+				&& (currentElectiveState == twoCourse || currentElectiveState == extraCourse)
+				&& countCourse >= 10) {
+			currentDegreeState.Degree("graduated", utilityIn);
+			currentDegreeState.Degree("", utilityIn);
 		}
-		if(core1Status == 5 || core2Status == 5 || core3Status == 5 || core4Status == 5) {
-			currentDegreeState.Degree("NeverGraduate");
-//			results.addCourseToResult(CourseInput);
+		if(currentCore1State == exitCourse || currentCore2State == exitCourse || currentCore3State == exitCourse || currentCore4State == exitCourse) {
+			currentDegreeState.Degree("NeverGraduate", utilityIn);
+			currentDegreeState.Degree("", utilityIn);
 		}
 	}
 	
@@ -158,50 +166,6 @@ public class CoursePlannerContext {
 
 	public void setResults(Results results) {
 		this.results = results;
-	}
-
-	public int getCore1Status() {
-		return core1Status;
-	}
-
-	public void setCore1Status(int core1Status) {
-		this.core1Status = core1Status;
-	}
-
-	public int getCore2Status() {
-		return core2Status;
-	}
-
-	public void setCore2Status(int core2Status) {
-		this.core2Status = core2Status;
-	}
-
-	public int getCore3Status() {
-		return core3Status;
-	}
-
-	public void setCore3Status(int core3Status) {
-		this.core3Status = core3Status;
-	}
-
-	public int getCore4Status() {
-		return core4Status;
-	}
-
-	public void setCore4Status(int core4Status) {
-		this.core4Status = core4Status;
-	}
-
-	public int getElectiveCount() {
-		return electiveCount;
-	}
-
-	public void setElectiveCount(int electiveCount) {
-		this.electiveCount = electiveCount;
-	}
-
-	public CoursePlannerStateI getCurrentCore1State() {
-		return currentCore1State;
 	}
 
 	public void setCurrentCore1State(CoursePlannerStateI currentCore1State) {

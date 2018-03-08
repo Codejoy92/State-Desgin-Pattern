@@ -1,5 +1,7 @@
 package studentCoursePlanner.state;
 
+import studentCoursePlanner.util.StateMachineUtility;
+
 public class ExitCourseState implements CoursePlannerStateI{
 
 	CoursePlannerContext context;
@@ -29,7 +31,7 @@ public class ExitCourseState implements CoursePlannerStateI{
 	}
 
 	@Override
-	public void Degree(String Course) {
+	public void Degree(String Course, StateMachineUtility machineUtility) {
 		// TODO Auto-generated method stub
 		
 	}

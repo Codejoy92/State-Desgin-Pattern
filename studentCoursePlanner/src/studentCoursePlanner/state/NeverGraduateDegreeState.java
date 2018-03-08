@@ -1,7 +1,11 @@
 package studentCoursePlanner.state;
 
+import studentCoursePlanner.util.Results;
+import studentCoursePlanner.util.StateMachineUtility;
+
 public class NeverGraduateDegreeState implements CoursePlannerStateI{
 
+	Results results;
     CoursePlannerContext context;
 	
 	public NeverGraduateDegreeState(CoursePlannerContext contextIn) {
@@ -39,9 +43,11 @@ public class NeverGraduateDegreeState implements CoursePlannerStateI{
 	}
 
 	@Override
-	public void Degree(String Course) {
-		// TODO Auto-generated method stub
-		
+	public void Degree(String Course, StateMachineUtility machineUtility) {
+		results = new Results();
+		results.setStoreResult(context.getServedList());
+		machineUtility = new StateMachineUtility();
+		machineUtility.setStopSupply(true);
 	}
 
 }
