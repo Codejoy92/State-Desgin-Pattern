@@ -14,7 +14,6 @@ public class StateMachineUtility {
 	ArrayList<String> waitList = new ArrayList<String>();
 	Hashtable<Integer, ArrayList<String>> semesterCourses = new Hashtable<Integer, ArrayList<String>>();
 	int semesterCount = 0;
-	StateMachineUtility utility = new StateMachineUtility();
 	boolean stopSupply;
 	String outputFileName;
 	String electives = "QRSTUVZXYW";
@@ -27,6 +26,8 @@ public class StateMachineUtility {
 	ArrayList<String> semesterList = new ArrayList<String>();
 
 	public void parseCourses(String data, String outputFileNameIn) {
+		StateMachineUtility utility = new StateMachineUtility();
+
 		setOutputFileName(outputFileNameIn);
 		String[] list1 = new String[] { "A", "B", "C", "D" };
 		core1.addAll(Arrays.asList(list1));
@@ -41,6 +42,7 @@ public class StateMachineUtility {
 			String[] splitData = data.split(":");
 
 			int bNumber = Integer.parseInt(splitData[0]);
+			result.setBnumber(bNumber);
 			splitData[1].trim();
 			String[] course = splitData[1].split(" ");
 			int noOfCourses = course.length;
@@ -98,8 +100,8 @@ public class StateMachineUtility {
 				plannerContext.trackProgress(finalList, utility);
 			}
 		}
-		
-		result.writeResult(getOutputFileName());
+		result.setStoreResult(plannerContext.getServedList());
+		result.writeResult(outputFileNameIn);
 	}
 
 	private void waitListCheck(List<String> core) {
@@ -111,12 +113,13 @@ public class StateMachineUtility {
 		}
 	}
 
-	public int calculateSem(int course) {
-		int sem = 0;
+	public int calculateSem(float course) {
+		float sem = 0;
 		if(course != 0) {
 			sem = course/3;
 		}
-		return sem;
+		int totalSem = (int) Math.ceil(sem);
+		return totalSem;
 	}
 	
 	public boolean isStopSupply() {

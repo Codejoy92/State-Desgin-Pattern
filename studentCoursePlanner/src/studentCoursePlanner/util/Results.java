@@ -10,21 +10,30 @@ public class Results implements FileDisplayInterface {
 
 	StateMachineUtility utility;
 	ArrayList<String> storeResult = new ArrayList<String>();
+	int bnumber;
 	
 	@Override
 	public void writeResult(String outputFile ) {
 		BufferedWriter out;
+		
+		StringBuffer result = new StringBuffer();
 		try {
 			out = new BufferedWriter(new FileWriter(outputFile));
+			result.append(bnumber);
+			result.append(": ");
 			for (String output : storeResult) {
-				out.write(output);
-				out.newLine();
+				result.append(output);
+				result.append(" ");
 			}
 			utility = new StateMachineUtility();
-			int totalSem = utility.calculateSem(storeResult.size());
-			out.write(totalSem);
+			float listSize = storeResult.size();
+			int totalSem = utility.calculateSem(listSize);
+			result.append("::");
+			result.append("Total number of sem:");
+			result.append(totalSem);
+
+			out.write(result.toString());
 			out.newLine();
-			
 			out.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("output file does not exisits");
@@ -43,6 +52,14 @@ public class Results implements FileDisplayInterface {
 
 	public void setStoreResult(ArrayList<String> storeResult) {
 		this.storeResult = storeResult;
+	}
+
+	public int getBnumber() {
+		return bnumber;
+	}
+
+	public void setBnumber(int bnumber) {
+		this.bnumber = bnumber;
 	}
 
 

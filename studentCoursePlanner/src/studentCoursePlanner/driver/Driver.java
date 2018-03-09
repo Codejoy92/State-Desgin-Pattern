@@ -3,7 +3,6 @@ package studentCoursePlanner.driver;
 import java.io.FileNotFoundException;
 
 import studentCoursePlanner.util.FileProcessor;
-import studentCoursePlanner.util.Results;
 import studentCoursePlanner.util.StateMachineUtility;
 
 public class Driver {
@@ -21,9 +20,9 @@ public class Driver {
 		String outputFileName = args[1];
 		fileProcessor = new FileProcessor();
 		plannerUtility = new StateMachineUtility();
-		
-		while (null!=data) {
-		data = fileProcessor.readLine(inputFileName);
+		fileProcessor.fileCheck(inputFileName);
+		while ((data = fileProcessor.readLine()) != null) {
+			fileProcessor.readLine();
 		plannerUtility.parseCourses(data, outputFileName);
 		}
 		

@@ -5,7 +5,6 @@ import studentCoursePlanner.util.StateMachineUtility;
 
 public class CompletedDegreeState implements CoursePlannerStateI {
 
-	Results results;
 	CoursePlannerContext context;
 	
 	public CompletedDegreeState(CoursePlannerContext contextIn) {
@@ -39,8 +38,6 @@ public class CompletedDegreeState implements CoursePlannerStateI {
 
 	@Override
 	public void Degree(String Course, StateMachineUtility machineUtility) {
-		results = new Results();
-		results.setStoreResult(context.getServedList());
 		machineUtility.setStopSupply(true);
 	}
 	
