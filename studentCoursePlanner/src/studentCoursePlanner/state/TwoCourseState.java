@@ -37,7 +37,7 @@ public class TwoCourseState implements CoursePlannerStateI {
 
 	@Override
 	public void Degree(String Course, StateMachineUtility machineUtility) {
-		// TODO Auto-generated method stub
+		System.out.println("Degree In Progress");
 		
 	}
 	

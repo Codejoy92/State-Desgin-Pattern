@@ -21,13 +21,13 @@ public class StateMachineUtility {
 	List<String> core2 = new ArrayList<String>();
 	List<String> core3 = new ArrayList<String>();
 	List<String> core4 = new ArrayList<String>();
-	Results result = new Results();
 
-	ArrayList<String> semesterList = new ArrayList<String>();
+	ArrayList<String> semesterList;
 
-	public void parseCourses(String data, String outputFileNameIn) {
+	public void parseCourses(String data, String outputFileNameIn, Results result) {
 		StateMachineUtility utility = new StateMachineUtility();
-
+		semesterList = new ArrayList<String>();
+		int bNumber = 0;
 		setOutputFileName(outputFileNameIn);
 		String[] list1 = new String[] { "A", "B", "C", "D" };
 		core1.addAll(Arrays.asList(list1));
@@ -41,8 +41,8 @@ public class StateMachineUtility {
 		if (null != data && (!data.trim().isEmpty())) {
 			String[] splitData = data.split(":");
 
-			int bNumber = Integer.parseInt(splitData[0]);
-			result.setBnumber(bNumber);
+			bNumber = Integer.parseInt(splitData[0]);
+		//	result.setBnumber(bNumber);
 			splitData[1].trim();
 			String[] course = splitData[1].split(" ");
 			int noOfCourses = course.length;
@@ -100,8 +100,10 @@ public class StateMachineUtility {
 				plannerContext.trackProgress(finalList, utility);
 			}
 		}
-		result.setStoreResult(plannerContext.getServedList());
-		result.writeResult(outputFileNameIn);
+	//	result.setStoreResult(plannerContext.getServedList());
+		result.finalResult.put(bNumber,plannerContext.getServedList());
+	//	result.getFinalResult().put(bNumber,plannerContext.getServedList());
+	//	result.writeResult(outputFileNameIn);
 	}
 
 	private void waitListCheck(List<String> core) {

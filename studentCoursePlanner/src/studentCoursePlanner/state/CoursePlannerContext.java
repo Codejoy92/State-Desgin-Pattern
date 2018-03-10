@@ -31,6 +31,7 @@ public class CoursePlannerContext {
 		ongoingDegree = new OngoingDegreeState(this);
 		completedDegree = new CompletedDegreeState(this);
 		neverGraduateDegree = new NeverGraduateDegreeState(this);
+		servedList = new ArrayList<String>();
 		currentCore1State = noCourse;
 		currentCore2State = noCourse;
 		currentCore3State = noCourse;
