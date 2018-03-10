@@ -26,7 +26,7 @@ public class Driver {
 		
 		fileProcessor.fileCheck(inputFileName);
 		while ((data = fileProcessor.readLine()) != null) {
-		plannerUtility.parseCourses(data, outputFileName, results);
+		plannerUtility.parseCourses(data, results);
 		}
 		results.writeResult(outputFileName);
 	}

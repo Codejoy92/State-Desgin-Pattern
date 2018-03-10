@@ -10,25 +10,30 @@ import studentCoursePlanner.state.CoursePlannerContext;
 
 public class StateMachineUtility {
 	String semester[];
-	CoursePlannerContext plannerContext = new CoursePlannerContext();
-	ArrayList<String> waitList = new ArrayList<String>();
-	Hashtable<Integer, ArrayList<String>> semesterCourses = new Hashtable<Integer, ArrayList<String>>();
-	int semesterCount = 0;
 	boolean stopSupply;
-	String outputFileName;
+	int semesterCount = 0;
 	String electives = "QRSTUVZXYW";
+	ArrayList<String> semesterList;
 	List<String> core1 = new ArrayList<String>();
 	List<String> core2 = new ArrayList<String>();
 	List<String> core3 = new ArrayList<String>();
 	List<String> core4 = new ArrayList<String>();
+	ArrayList<String> waitList = new ArrayList<String>();
+	CoursePlannerContext plannerContext = new CoursePlannerContext();
+	Hashtable<Integer, ArrayList<String>> semesterCourses = new Hashtable<Integer, ArrayList<String>>();
 
-	ArrayList<String> semesterList;
-
-	public void parseCourses(String data, String outputFileNameIn, Results result) {
+	/**
+	 * This method serves as a tool for course allotment considering student's
+	 * preferences and saves the ouput in Result class
+	 * 
+	 * @param String data
+	 * @param Results result
+	 * 
+	 */
+	public void parseCourses(String data, Results result) {
 		StateMachineUtility utility = new StateMachineUtility();
 		semesterList = new ArrayList<String>();
 		int bNumber = 0;
-		setOutputFileName(outputFileNameIn);
 		String[] list1 = new String[] { "A", "B", "C", "D" };
 		core1.addAll(Arrays.asList(list1));
 		String[] list2 = new String[] { "E", "F", "G", "H" };
@@ -42,13 +47,11 @@ public class StateMachineUtility {
 			String[] splitData = data.split(":");
 
 			bNumber = Integer.parseInt(splitData[0]);
-		//	result.setBnumber(bNumber);
 			splitData[1].trim();
 			String[] course = splitData[1].split(" ");
 			int noOfCourses = course.length;
 
 			for (int i = 1; i < noOfCourses; i++) {
-				// filling up courses for 1st sem
 				if (!core1.isEmpty() && course[i].equalsIgnoreCase(core1.get(0))) {
 					semesterList.add(course[i]);
 					core1.remove(0);
@@ -71,7 +74,7 @@ public class StateMachineUtility {
 					waitList.add(course[i]);
 				}
 			}
-//Rule: courses from waitList will be released in Alphabetical order
+
 			Collections.sort(waitList);
 			if (!waitList.isEmpty()) {
 				for (String var : waitList) {
@@ -96,16 +99,22 @@ public class StateMachineUtility {
 			}
 			plannerContext.InitiliazeCoursePlanner();
 			for (String finalList : semesterList) {
-				if(!utility.isStopSupply())
-				plannerContext.trackProgress(finalList, utility);
+				if (!utility.isStopSupply())
+					plannerContext.trackProgress(finalList, utility);
 			}
 		}
-	//	result.setStoreResult(plannerContext.getServedList());
-		result.finalResult.put(bNumber,plannerContext.getServedList());
-	//	result.getFinalResult().put(bNumber,plannerContext.getServedList());
-	//	result.writeResult(outputFileNameIn);
+		result.finalResult.put(bNumber, plannerContext.getServedList());
 	}
 
+	/**
+	 * This method is a helper function for parseCourses
+	 * This method takes the list and checks index 0 element accross complete waitlist,
+	 * if element found it adds that element in the semesterList and removes that element from the waitlist and from the list passed,
+	 * so that next element in the list gets index 0 and checked recursively against the waitlist until no match found.
+	 * 
+	 * @param List<String> core
+	 *
+	 */
 	private void waitListCheck(List<String> core) {
 		if (!core.isEmpty() && waitList.contains(core.get(0))) {
 			semesterList.add(core.get(0));
@@ -114,30 +123,39 @@ public class StateMachineUtility {
 			waitListCheck(core);
 		}
 	}
-
+	
+	/**
+	 * This method is used to calculate no semester a student have to take to 
+	 * complete his graduation.
+	 * 
+	 * @param float course
+	 */
 	public int calculateSem(float course) {
 		float sem = 0;
-		if(course != 0) {
-			sem = course/3;
+		if (course != 0) {
+			sem = course / 3;
 		}
 		int totalSem = (int) Math.ceil(sem);
 		return totalSem;
 	}
-	
+
+	/**
+	 * this is a getter method for stop supply
+	 * which returns boolean value
+	 * 
+	 * @return stopSupply
+	 */
 	public boolean isStopSupply() {
 		return stopSupply;
 	}
 
+	/**
+	 * this is a setter method which sets stopSupply to boolean value
+	 * 
+	 * @param stopSupply
+	 */
 	public void setStopSupply(boolean stopSupply) {
 		this.stopSupply = stopSupply;
 	}
 
-	public String getOutputFileName() {
-		return outputFileName;
-	}
-
-	public void setOutputFileName(String outputFileName) {
-		this.outputFileName = outputFileName;
-	}
-	
 }

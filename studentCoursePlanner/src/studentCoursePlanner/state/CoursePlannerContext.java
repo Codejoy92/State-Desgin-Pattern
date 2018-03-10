@@ -7,21 +7,13 @@ import studentCoursePlanner.util.StateMachineUtility;
 
 public class CoursePlannerContext {
 	
-	CoursePlannerStateI noCourse, oneCourse, twoCourse, extraCourse, exitCourse, currentCore1State, currentCore2State,
-			currentCore3State, currentCore4State, currentElectiveState, currentDegreeState;
-	CoursePlannerStateI ongoingDegree, completedDegree, neverGraduateDegree;
 	Results results;
 	int countCourse;
+	CoursePlannerStateI noCourse, oneCourse, twoCourse, extraCourse, exitCourse;
+	CoursePlannerStateI	currentCore1State, currentCore2State, currentCore3State, currentCore4State, currentElectiveState, currentDegreeState;
+	CoursePlannerStateI ongoingDegree, completedDegree, neverGraduateDegree;
 	ArrayList<String> servedList = new ArrayList<String>();
 	
-	public ArrayList<String> getServedList() {
-		return servedList;
-	}
-
-	public void setServedList(ArrayList<String> servedList) {
-		this.servedList = servedList;
-	}
-
 	public  void InitiliazeCoursePlanner() {
 		noCourse = new NoCourseState(this);
 		oneCourse = new OneCourseState(this);
@@ -38,7 +30,6 @@ public class CoursePlannerContext {
 		currentCore4State = noCourse;
 		currentElectiveState = noCourse;
 		currentDegreeState = ongoingDegree;
-		
 		countCourse = 0;
 		results = new Results();
 		
@@ -47,7 +38,6 @@ public class CoursePlannerContext {
 	public void trackProgress(String CourseInput, StateMachineUtility utilityIn) {
 		
 		countCourse++;
-		
 		
 		switch(CourseInput){
 			case "A":
@@ -211,6 +201,14 @@ public class CoursePlannerContext {
 
 	public void setCurrentElectiveState(CoursePlannerStateI currentElectiveState) {
 		this.currentElectiveState = currentElectiveState;
+	}
+	
+	public ArrayList<String> getServedList() {
+		return servedList;
+	}
+
+	public void setServedList(ArrayList<String> servedList) {
+		this.servedList = servedList;
 	}
 	
 	

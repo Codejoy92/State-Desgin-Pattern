@@ -47,22 +47,6 @@ public class Results implements FileDisplayInterface {
 				
 			}
 			
-		/*	result.append(bnumber);
-			result.append(": ");
-			for (String output : storeResult) {
-				result.append(output);
-				result.append(" ");
-			}
-			utility = new StateMachineUtility();
-			float listSize = storeResult.size();
-			int totalSem = utility.calculateSem(listSize);
-			result.append("::");
-			result.append("Total number of sem:");
-			result.append(totalSem);
-
-			out.write(result.toString());
-			out.newLine();*/
-			
 			out.close();
 			
 		} catch (FileNotFoundException e) {
