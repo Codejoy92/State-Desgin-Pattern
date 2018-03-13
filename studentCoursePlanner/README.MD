@@ -29,7 +29,7 @@ grade of 0 for the involved assignment for my first offense and that I
 will receive a grade of F for the course for any additional
 offense."
 
-[Date: 03/10/2018]
+[Date: 03/13/2018]
 
 -----------------------------------------------------------------------
 
@@ -53,7 +53,7 @@ ongoingDegree(default state for Degree state),
 completedDegree,
 neverGraduateDegree
 
-classes above implement CoursePlannerStateI and the methods are called depending on the course type and change the state of that particular course catagory
+classes above implement CoursePlannerStateI and the methods are called depending on the course type and change the state of that particular course category
 
 States reference for current status: 
 currentCore1State(Long Programming and Design), 
@@ -63,20 +63,23 @@ currentCore4State(Data Analytics),
 currentElectiveState(Electives), 
 currentDegreeState;
 
-this references are used to update the state of the catagory types 
+this references are used to update the state of the category types
 
+CurrentContext class keep passing the the courses to their category type's current state and those state change it to other state depending on situation and
+As soon as we have each category is of state type twoCourse or ExtraCourse and total courses and total number of courses are more than 10 we stop processing further, and declare that student as completed graduation, if any course category  state enters into exitCourse State then we declare it as student can Never Graduate 
+------------------------------------------------------------------------
 RULES FOLLOWED:
-1. Course prefernce is given in alphabetical order.
+1. Course preference is given in alphabetical order.
 2. Courses taken in a semester should be higher than the course taken in the previous semester.
 3. Electives do not have any pre-requisites.
 4. Courses in Waitlist are released in Ascending order due to RULE 2.
-5. As soon as we get 2 courses from each catagory and total number of courses are more than 10 we stop processing furthur.
+5. As soon as we get 2 courses from each category and total number of courses are more than 10 we stop processing further.
 
 IMPACT:
-1. Due to rules mentioned above until we get 1st course of a particular catagory later course are added in waitlist.
-   As soon as 1st course is found waitlist is searched for the next course in the catagory and then control goes back to sequence provided by the user and so on.
+1. Due to rules mentioned above until we get 1st course of a particular category later course are added in waitlist.
+   As soon as 1st course is found, waitlist is searched for the next course in the catagory and then control goes back to sequence provided by the user and so on.
    
 EXAMPLE:
 input : 2232: P M O F I G N W C D X L K A J E S B U V H
-output: 2232: M I N O P W X A J K L E F G S B :: Total no of sem: 6
+output: 2232: M I N O P W X A J K L E F G S B  :: Graduation status: Graduation Completed   :: Total number of semester taken:6
 
