@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-public class Results implements FileDisplayInterface {
+public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
 	StateMachineUtility utility;
-	ArrayList<String> storeResult = new ArrayList<String>();
 	int bnumber;
 	
 	Hashtable<Integer, ArrayList<String>> finalResult = new Hashtable<Integer, ArrayList<String>>();
@@ -39,33 +38,27 @@ public class Results implements FileDisplayInterface {
 				float listSize = coursePref.size();
 				int totalSem = utility.calculateSem(listSize);
 				result.append(" :: ");
-				result.append("Total number of sem:");
+				result.append("Total number of semester taken:");
 				result.append(totalSem);
-				
+				display(result);
 				out.write(result.toString());
 				out.newLine();
-				
 			}
-			
 			out.close();
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("output file does not exisits");
+			System.err.println("output file does not exisits");
 			e.printStackTrace();
 			System.exit(1);
 		} catch (IOException e) {
-			System.out.println("error while writing into file");
+			System.err.println("error while writing into file");
 			System.exit(1);
 		}
 		
 	}
-
-	public ArrayList<String> getStoreResult() {
-		return storeResult;
-	}
-
-	public void setStoreResult(ArrayList<String> storeResult) {
-		this.storeResult = storeResult;
+	@Override
+	public void display(StringBuffer resultIn) {
+		System.out.println(resultIn);
 	}
 
 }

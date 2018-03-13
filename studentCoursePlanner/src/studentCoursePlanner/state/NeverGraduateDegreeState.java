@@ -34,8 +34,7 @@ public class NeverGraduateDegreeState implements CoursePlannerStateI{
 
 	@Override
 	public void Degree(String Course, StateMachineUtility machineUtility) {
-		results = new Results();
-		results.setStoreResult(context.getServedList());
+		
 		machineUtility = new StateMachineUtility();
 		machineUtility.setStopSupply(true);
 	}

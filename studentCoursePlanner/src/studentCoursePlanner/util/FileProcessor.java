@@ -10,21 +10,31 @@ public class FileProcessor {
 	FileReader fileReader = null;
 	
 	/**
-	 * This function is used to read contents of file line by line
+	 * This function is used to validate arguments passed
+	 * @param String[] args
 	 * 
 	 */
 	
-	public void fileCheck(String inputFile) {
+	public void fileCheck(String[] args) {
 		try {
-			fileReader = new FileReader(inputFile);
+			if (args.length != 2 || args[0].equals("${arg0}") || args[1].equals("${arg1}") || null == args) {
+				System.err.println("Error: Incorrect number of arguments. Please Pass 2 argumnets.");
+				System.exit(0);
+			}
+			fileReader = new FileReader(args[0]);
 			bufferedReader = new BufferedReader(fileReader);
-
+			
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found");
+			System.err.println("File not found");
 			System.exit(1);
 		}
 		
 	}
+	
+	/**
+	 * This function is used to read contents of file and return them line by line 
+	 * @return entry
+	 */
 	public String readLine() {
 		String entry = null;
 		try {
@@ -32,7 +42,7 @@ public class FileProcessor {
 			if(null == entry)
 				return null;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.err.println(e);
 			System.exit(1);
 		}
 		return entry;

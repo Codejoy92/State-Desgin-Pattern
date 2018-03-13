@@ -12,27 +12,27 @@ public class ExtraCourseState implements CoursePlannerStateI {
 	
 	@Override
 	public void Core1(String Course) {
-		System.out.println("More than 2 Courses taken from Long Programming and Design catagory");
+//		System.out.println("More than 2 Courses taken from Long Programming and Design catagory");
 	}
 
 	@Override
 	public void Core2(String Course) {
-		System.out.println("More than 2 Courses taken from Data Structures and Algorithms catagory");
+//		System.out.println("More than 2 Courses taken from Data Structures and Algorithms catagory");
 	}
 
 	@Override
 	public void Core3(String Course) {
-		System.out.println("More than 2 Courses taken from Hardware Sequence catagory");
+//		System.out.println("More than 2 Courses taken from Hardware Sequence catagory");
 	}
 
 	@Override
 	public void Core4(String Course) {
-		System.out.println("More than 2 Courses taken from Data Analytics catagory");
+//		System.out.println("More than 2 Courses taken from Data Analytics catagory");
 	}
 
 	@Override
 	public void Elective(String Course) {
-		System.out.println("More than 2 Courses taken from Electives catagory");
+//		System.out.println("More than 2 Courses taken from Electives catagory");
 	}
 
 	@Override

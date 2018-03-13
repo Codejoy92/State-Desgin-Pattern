@@ -1,5 +1,5 @@
 package studentCoursePlanner.util;
 
-public class StdoutDisplayInterface {
-
+public interface StdoutDisplayInterface {
+	public void display(StringBuffer resultIn);
 }
